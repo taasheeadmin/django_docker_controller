@@ -34,14 +34,18 @@ def lunch_template(max_count: int = 1):
         MinCount=1,
         MaxCount=max_count
     )
-    instance_response = response['Instances'][0]
-    instance_id = instance_response['InstanceId']
-    ip_address = instance_response['PrivateIpAddress']
+
+    instances = response['Instances']
 
     with transaction.atomic():
-        NodeInstance.objects.create(instance_id=instance_id, private_ip=ip_address)
-        set_pending_capacity(get_pending_capacity() + accepted_containers_count)
-    
+        for instance in instances:
+            instance_id = instance['InstanceId']
+            ip_address = instance['PrivateIpAddress']
+            NodeInstance.objects.create(instance_id=instance_id, private_ip=ip_address)
+
+        total_pending_capacity = get_pending_capacity() + (accepted_containers_count * len(instances))
+        set_pending_capacity(total_pending_capacity)
+
     return None
 
 
