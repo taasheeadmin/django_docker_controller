@@ -30,7 +30,7 @@ class ScaleUpNodes(APIView):
         This endpoint will be used to add multiple nodes to the Docker Swarm cluster.
         """
         response = lunch_template(max_count=count)
-        return response
+        return Response({"msg": f"{count} Nodes added to Cluster"}, status=201)
 
 
 class GetScheduledNodeScaleDown(APIView):
