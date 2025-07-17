@@ -68,7 +68,7 @@ class ContainerResource(APIView):
             return Response({'status': 'success', 'data': obj})
         except docker.errors.NotFound:
             response_body = {"error": f"Service '{service_name}' not found.", "status": "failed"}
-            return Response(response_body, status=status.HTTP_404_NOT_FOUND)
+            return Response(response_body, status=status.HTTP_204_NO_CONTENT)
         except Exception as e:
             response_body = {'error': str(e), "status": "failed"}
             return Response(response_body, status=status.HTTP_400_BAD_REQUEST)
