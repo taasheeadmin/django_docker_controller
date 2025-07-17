@@ -19,7 +19,8 @@ def schedule_scale_down():
         raise Exception(idel_node_ids_response)
     
     idel_node_ids = idel_node_ids_response['data']
-    logger.error("Idle node ID's: ", idel_node_ids)
+    logger.error(f"Idle node ID's: {idel_node_ids}")
+
 
     if idel_node_ids != []:
         remove_node_from_swarm_response = remove_node_from_swarm(idel_node_ids)
